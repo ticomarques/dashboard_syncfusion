@@ -28,10 +28,10 @@ import { useStateContext } from './contexts/ContextProvider';
 import './App.css';
 
 const App = () => {
-  const { activeMenu } = useStateContext();
+  const { activeMenu, themeSettings, setThemeSettings, currentColor, currentMode } = useStateContext();
 
   return (
-    <div>
+    <div className={currentMode === 'Dark' ?  'dark' : ''}>
       <BrowserRouter>
         <div className="flex relative dark:bg-main-dark-bg">
           <div className="fixed right-4 bottom-4" style={{ zIndex: '1000' }}>
@@ -39,14 +39,15 @@ const App = () => {
               <button
                 type="buttton"
                 className="text-3x1 p-3 hover:drop-shadow-x1 hover:bg-light-gray text-white"
-                style={{ background: 'blue', borderRadius: '50%' }}
+                onClick={() => setThemeSettings(true)}
+                style={{ background: `${currentColor}`, borderRadius: '50%' }}
               >
                 <FiSettings />
               </button>
             </TooltipComponent>
           </div>
           {activeMenu ? (
-            <div className="w-72 fixed sidebar dark: bg-secondary-dark-bg bg-white">
+            <div className="w-72 fixed sidebar dark:bg-secondary-dark-bg bg-white">
               <Sidebar />
             </div>
           ) : (
@@ -56,16 +57,19 @@ const App = () => {
           )}
 
           <div
-            className={`dark:bg-main-bg bg-main-bg min-h-screen w-full ${
-              activeMenu ? 'md:m1-72' : 'flex-2'
-            }`}
-          >
+            className={`dark:bg-main-dark-bg bg-main-bg min-h-screen w-full ${
+              activeMenu 
+                ? 'md:ml-72' 
+                : 'flex-2'}`
+            }>
             <div className="fixed md:static bg-main-bg dark:bg-main-dark-bg navbar w-full">
               <Navbar />
             </div>
           
 
           <div>
+            {themeSettings && <ThemeSettings />}
+
             <Routes>
               {/* DASHBOARD */}
               <Route path="/" element={<Ecommerce />} />
