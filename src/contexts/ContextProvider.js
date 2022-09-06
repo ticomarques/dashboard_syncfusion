@@ -30,10 +30,7 @@ export const ContextProvider = ({ children }) => {
     setThemeSettings(false);
   }
 
-  const handleClick  = (clicked) => {
-    setIsClicked({...initialState, [clicked]: 
-        true});
-  }
+  const handleClick = (clicked) => setIsClicked({ ...initialState, [clicked]: true });
 
   return (
     <StateContext.Provider
@@ -42,9 +39,11 @@ export const ContextProvider = ({ children }) => {
         setActiveMenu,
         isClicked, 
         setIsClicked,
+        initialState,
         handleClick,
         screenSize, setScreenSize,
-        currentColor, currentMode,
+        currentColor, setCurrentColor,
+        currentMode, setCurrentMode,
         themeSettings, setThemeSettings,
         setMode, setColor
       }}
